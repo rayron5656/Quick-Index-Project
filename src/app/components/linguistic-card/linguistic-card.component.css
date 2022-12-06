@@ -1,0 +1,13 @@
+
+#wrapper_1:after {
+    content: "";
+    background-color: rgb(109, 105, 105);
+    position: absolute;
+    width: 3px;
+    height: 980px;
+    top: 10px;
+    left: 24px;
+    right: 24px;
+    left: 46%;
+    display: block;
+}

@@ -1,0 +1,103 @@
+<div class="row-1 d-flex justify-content-center">
+    <div class="col-5 ">
+        <form [formGroup]="form" class="form mt-5 ">
+            <div class="col-5">
+                <h1>Add New Hebrew-Israeli Word</h1>
+            </div>
+            <div class="mb-3 ">
+                <label for="exampleFormControlInput1" class="form-label">Title</label>
+                <input formControlName="title" type="email" class="form-control" id="exampleFormControlInput1" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Definition</label>
+                <input formControlName="definition" type="email" class="form-control" id="exampleFormControlInput1" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Categories</label>
+                <textarea formControlName="categories" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Status</label>
+                <input formControlName="status" type="email" class="form-control" id="exampleFormControlInput1" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Variations</label>
+                <textarea formControlName="variations" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Base form</label>
+                <input formControlName="baseForm" type="email" class="form-control" id="exampleFormControlInput1" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">File name</label>
+                <input formControlName="fileName" id="fileName"  [value]="this.fileName? this.fileName : '' "  type="text" class="form-control mb-2"  >
+                <label for="exampleFormControlTextarea1" class="form-label">File url</label>
+                <input formControlName="fileUrl" id="fileName" [value]="this.fileUrl? this.fileUrl : '' " type="text" class="form-control mb-2"  >
+            </div>
+            <form >
+        
+                <div class="container justify-center">
+                
+                <div 
+                appDragAndDropDirective 
+                class="file-drop-area" 
+                (fileDropped)="uploadFile($event)"
+                id="fileDropArea"
+                >
+                    <span class="choose-file-button w-2/4 h-2/4">
+                        <div class="visible" id="buttonText">
+                            Choose files
+                        </div>
+                        <div hidden id="loading">
+                            <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                                
+                            </svg>
+                            <span>cancel</span>
+                        </div>
+                    </span>
+                    <span id="text" class="file-message">
+                        or drag and drop files here
+                    </span>
+                    <span id="fileName" class="file-message">
+                        {{fileName}}
+                    </span>
+                    <input 
+                        #fileField 
+                        (change)="uploadFile($event)" 
+                        name="avatars" 
+                        class="file-input" 
+                        type="file" 
+                        multiple
+                    >
+                </div>
+                </div>
+                
+            </form>
+        
+            <div class="container col-1">
+                <button [disabled]="!form.valid"  (click)="submitForm()" class="btn btn-primary m-3" >upload</button>
+            </div>
+        </form>
+    </div>
+    <!-- <div class="col-5 d-flex justify-content-center">
+        <form [formGroup]="searchForm" class="form mt-5 ">
+            <div class="col-5">
+                <h1>Search Words</h1>
+            </div>
+            <div class="mb-3 ">
+                <label for="exampleFormControlInput1" class="form-label">Search</label>
+                <input formControlName="search" type="email" class="form-control" id="exampleFormControlInput1">
+            </div>
+
+            
+        
+            <div class="container">
+                <app-card-list></app-card-list>
+            </div>
+        </form>
+        
+    </div> -->
+</div>

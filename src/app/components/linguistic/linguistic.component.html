@@ -1,0 +1,15 @@
+<div class="text-center">
+    <div class="row text-center item-center ">
+        <div  class="col-2 p-4">
+                <div>
+                    <form [formGroup]="form" class="form-inline">
+                    <input formControlName="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <div id="infinite-scroll-container"><app-word-list (loadEmitter)="loadMoreWords($event)" (emitter)="setWord($event)" [words]="words"></app-word-list></div>
+                </form>
+            </div>
+        </div>
+        <div class="col container">
+            <app-linguistic-card #ChildCmp (saveEvent)="onSave()" (cancelEvent)="setInitialState($event)"  [hidden]="!this.isWord" [word]="chosenWord"></app-linguistic-card>
+        </div>
+    </div>
+</div>

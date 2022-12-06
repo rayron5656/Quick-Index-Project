@@ -1,0 +1,17 @@
+<div #webp  class="text-center item-center">
+    <div class="row text-center item-center ">
+        <div class="col bigPic">
+            <div class="">
+                <img width="500" height="500"  [src]="this.fileURL ? this.fileURL : ''">
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-10">
+            <img width="360" height="360"  [src]="this.fileURL ? this.fileURL : ''">
+        </div>
+        <div class="col-2 tinyPic">
+            <img  width="180" height="180"  [src]="this.fileURL ? this.fileURL : ''">
+        </div>
+    </div>
+</div>

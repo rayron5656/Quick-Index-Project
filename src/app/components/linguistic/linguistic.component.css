@@ -1,0 +1,6 @@
+#infinite-scroll-container {
+    position: relative;
+    overflow: scroll;
+    min-height: 1080px;
+    max-height: 1080px;
+}

@@ -1,0 +1,20 @@
+<div
+    class="search-results"
+    id="infinite-scroll-container"
+    
+    infiniteScrollContainer
+    infiniteScroll
+    [infiniteScrollDistance]="2000"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    [scrollWindow]="true"
+    (scroll)="onScroll()"
+>
+    <div *ngFor="let word of words; let i = index ">
+        <app-word-list-item (click)="setWord(word)" [number]="i + 1"  [word]="word"></app-word-list-item>
+    </div>
+    <div>
+        <button (click)="loadMore()" [disabled]="isLoading" #btn class="btn btn-primary my-4">{{btnText}}</button>
+    </div>
+</div>
+

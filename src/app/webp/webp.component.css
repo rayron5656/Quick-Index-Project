@@ -1,0 +1,14 @@
+img {
+    border: 1px solid #555;
+  }
+
+.bigPic{
+    padding-top: 24px;
+    padding-left: 50px;
+    padding-bottom: 24px;
+}
+.tinyPic{
+    padding-top: 80px;
+    padding-left: 75px;
+    padding-bottom: 100px;
+}
