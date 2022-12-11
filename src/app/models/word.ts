@@ -16,5 +16,4 @@ export interface Word {
     updatedAt? : number;
     createdAt? : number;
     updatedBy? : string;
-    notes : string;
 }

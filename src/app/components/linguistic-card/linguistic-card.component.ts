@@ -17,6 +17,7 @@ import { handleVars } from 'src/app/models/VarsHandler';
   styleUrls: ['./linguistic-card.component.css']
 })
 export class LinguisticCardComponent implements OnInit,OnChanges {
+
     checkForSave() {
     if(this.form.touched && this.form.valid) {
       return false;
@@ -84,7 +85,6 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
       this.word.title = this.form.get('title')?.value;
       this.word.definition = this.form.get('definition')?.value;
       (this.word.translationParams as StemmingBasedTranslationParams).variations = handleVars(this.form.get('variations')?.value);
-      this.word.notes = this.form.get('notes')?.value;
       this.word.validation = {"BATCH_ID":{
         ...this.getStatusFromValidationState()
       }}
@@ -92,11 +92,11 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
       this.client.updateWord(this.word).subscribe(
         (data) => {
           this.updateForm(this.form);
-          this.saveEvent.emit();
+          // this.saveEvent.emit();
+          this.form.setValidators(null);
         }
       )
     }
-    console.log(this.word);
   }
   getStatusFromValidationState(): { notes?: string | undefined; status: import("../../models/status").Status; } {
     switch(this.form.get('validate')?.value) {
@@ -123,6 +123,8 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
         notes : [''],
         validate: [false]
       });
+
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {

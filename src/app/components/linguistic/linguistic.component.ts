@@ -40,7 +40,6 @@ export class LinguisticComponent implements OnInit,AfterViewChecked {
         }
       });
     }
-
   }
   
   
@@ -118,7 +117,6 @@ export class LinguisticComponent implements OnInit,AfterViewChecked {
     this.form = this.fb.group({
       search : ['']
     });
-    
 
     this.form.valueChanges.pipe(
       debounceTime(500),

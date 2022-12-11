@@ -37,6 +37,10 @@ export class ClientService {
       }});
   }
 
+  deleteAllStagedWords() {
+    return this.http.delete(this.wordsUrl+"/staged");
+  }
+
   getWordByTerm(term : string){
     return this.http.get('http://localhost:5050/api/v1/word/search/' + term)
   }

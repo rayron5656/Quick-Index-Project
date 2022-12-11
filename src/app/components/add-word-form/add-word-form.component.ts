@@ -33,7 +33,7 @@ export class AddWordFormComponent implements OnInit {
   newAnimationConfig : FileBasedAnimationConfig = {
     type: 'file-based',
     avatars: { 
-      '5f123ef5-2852-4d48-b355-a6f14485c750' : {
+      'a289ee5f-9a73-44db-b802-44e1ae596cd1' : {
         webp : {
           _720x720 : {
             url: '',
@@ -43,7 +43,7 @@ export class AddWordFormComponent implements OnInit {
         }
       }
     },
-    supportedAvatars: ["5f123ef5-2852-4d48-b355-a6f14485c750"]
+    supportedAvatars: ["a289ee5f-9a73-44db-b802-44e1ae596cd1"]
   }
   
   word : Word = {
@@ -61,8 +61,7 @@ export class AddWordFormComponent implements OnInit {
   translationParams :  this.stemmingBasedTranslationParams as StemmingBasedTranslationParams,
   createdAt : 0,
   updatedBy : "",
-  notes : "",
-  }
+}
 
 
   
@@ -97,12 +96,13 @@ createFormData(arg0: File): FormData {
     public fb: FormBuilder,
     private clientService: ClientService
   ) { 
-    
+
+
     this.form = this.fb.group({
       fileName:   [{value: 'please select a file', disabled: true},Validators.required],
       fileUrl : [{value: 'please select a file', disabled: true},Validators.required],
       definition : ["",Validators.required],
-      status : ["",Validators.required],
+      status : ["awaiting",Validators.required],
       categories : ["",Validators.required],
       title : ["",Validators.required],
       updatedBy : [""],
@@ -116,7 +116,7 @@ createFormData(arg0: File): FormData {
     });
     
     this.form.valueChanges.subscribe(() => {
-      if (this.word.sign && this.word.translationParams && this.newAnimationConfig.avatars['5f123ef5-2852-4d48-b355-a6f14485c750'].webp && this.newAnimationConfig.avatars['5f123ef5-2852-4d48-b355-a6f14485c750'].webp['_720x720']) {
+      if (this.word.sign && this.word.translationParams && this.newAnimationConfig.avatars['a289ee5f-9a73-44db-b802-44e1ae596cd1'].webp && this.newAnimationConfig.avatars['a289ee5f-9a73-44db-b802-44e1ae596cd1'].webp['_720x720']) {
         this.fileName = this.form.get('fileName')?.value;
         this.fileUrl = this.form.get('fileUrl')?.value;
         this.word.title = this.form.get('title')?.value;
@@ -126,8 +126,8 @@ createFormData(arg0: File): FormData {
         this.stemmingBasedTranslationParams.variations = this.form.get('variations')?.value?.split(',').map((variation: string) => variation.trim());
         this.stemmingBasedTranslationParams.baseForm = this.form.get('baseForm')?.value.length > 0? this.form.get('baseForm')?.value :  this.form.get('title')?.value;
         this.word.translationParams = this.stemmingBasedTranslationParams;
-        this.newAnimationConfig.avatars['5f123ef5-2852-4d48-b355-a6f14485c750'].webp["_720x720"]['url'] = this.form.get('fileUrl')?.value;
-        this.newAnimationConfig.avatars['5f123ef5-2852-4d48-b355-a6f14485c750'].webp["_720x720"]['name'] = this.form.get('fileName')?.value;
+        this.newAnimationConfig.avatars['a289ee5f-9a73-44db-b802-44e1ae596cd1'].webp["_720x720"]['url'] = this.form.get('fileUrl')?.value;
+        this.newAnimationConfig.avatars['a289ee5f-9a73-44db-b802-44e1ae596cd1'].webp["_720x720"]['name'] = this.form.get('fileName')?.value;
         this.word.sign.animation = this.newAnimationConfig
         this.word.updatedBy = "ron patashnik";
         this.word.createdAt = Date.now();
@@ -137,7 +137,9 @@ createFormData(arg0: File): FormData {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+  }
 
   submitForm() {
     console.log(this.word);
