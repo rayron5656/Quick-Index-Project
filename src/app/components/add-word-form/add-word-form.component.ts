@@ -74,10 +74,14 @@ export class AddWordFormComponent implements OnInit {
       console.log(res);
       this.fileName = res.fileName;
       this.fileUrl = res.url;
+      let definition = this.fileName.replace('he_he_il_','').replace('_',' ').replace('.webp','')
+      do {
+        definition = definition.replace('_',' ')
+      } while (definition.includes('_'));
       this.form.patchValue({
         fileName: this.fileName,
-        fileUrl: this.fileUrl
-        
+        fileUrl: this.fileUrl,
+        definition: definition,
       });
     });
   }
@@ -123,7 +127,7 @@ createFormData(arg0: File): FormData {
         this.word.definition = this.form.get('definition')?.value;
         this.word.status = this.form.get('status')?.value;
         this.word.categories = this.form.get('categories')?.value.split(',');
-        this.stemmingBasedTranslationParams.variations = this.form.get('variations')?.value?.split(',').map((variation: string) => variation.trim());
+        this.stemmingBasedTranslationParams.variations = this.setVars(this.form.get('variations')?.value);
         this.stemmingBasedTranslationParams.baseForm = this.form.get('baseForm')?.value.length > 0? this.form.get('baseForm')?.value :  this.form.get('title')?.value;
         this.word.translationParams = this.stemmingBasedTranslationParams;
         this.newAnimationConfig.avatars['a289ee5f-9a73-44db-b802-44e1ae596cd1'].webp["_720x720"]['url'] = this.form.get('fileUrl')?.value;
@@ -135,6 +139,17 @@ createFormData(arg0: File): FormData {
       }
       console.log(this.word);
     });
+  }
+  setVars(value: any): string[] {
+    let vars = value.split(',');
+    for (let i = 0; i < vars.length; i++) {
+      if (vars[i].length > 0) {
+        vars[i] = vars[i].trim();
+      } else {
+        vars.splice(i,1);
+      }
+    }
+    return vars;
   }
 
   ngOnInit(): void {
