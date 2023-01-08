@@ -26,6 +26,53 @@
                         </div>
                     </div>
                 </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">File name</label>
+                    <input formControlName="fileName" id="fileName"  [value]="this.fileName? this.fileName : '' "  type="text" class="form-control mb-2"  >
+                    <label for="exampleFormControlTextarea1" class="form-label">File url</label>
+                    <input formControlName="fileUrl" id="fileName" [value]="this.fileUrl? this.fileUrl : '' " type="text" class="form-control mb-2"  >
+                </div>
+                <div class="input-group col-6">
+                        <div class="container justify-center">
+                        <div 
+                        appDragAndDropDirective 
+                        class="file-drop-area" 
+                        (fileDropped)="uploadFile($event)"
+                        id="fileDropArea"
+                        >
+                            <div class="container text-center">
+                                <div class="row">
+                                    <span class="choose-file-button w-2/4 h-2/4">
+                                        <div class="visible" id="buttonText">
+                                            Choose files
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col-12">
+                                        OR
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span id="text" class="file-message">
+                                        drag and drop files here
+                                    </span>
+                                </div>
+                            </div>
+                            <span id="fileName" class="file-message">
+                                {{fileName}}
+                            </span>
+                            <input 
+                                #fileField 
+                                (change)="uploadFile($event)" 
+                                name="avatars" 
+                                class="file-input" 
+                                type="file" 
+                                multiple
+                            >
+                        </div>
+                        </div>
+                </div>
                 <div class="input-group mt-3 mb-3">
                     <button  [disabled]="checkForSave()" class="btn btn-primary form-control" (click)="submitForm()">save</button>
                 </div>

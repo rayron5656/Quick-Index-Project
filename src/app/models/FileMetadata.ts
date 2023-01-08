@@ -4,4 +4,5 @@ export interface FileMetadata {
     name: string;
     type?: string;
     createdAt: number;
+    duration?: number;
 }

@@ -13,6 +13,7 @@ import { WordListComponent } from './components/word-list/word-list.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { WordListItemComponent } from './components/word-list-item/word-list-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AvatarTestingComponent } from './components/avatar-testing/avatar-testing.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LinguisticCardComponent,
     WordListComponent,
     WordListItemComponent,
+    AvatarTestingComponent,
   ],
   imports: [
     BrowserModule,

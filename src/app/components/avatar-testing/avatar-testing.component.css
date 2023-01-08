@@ -1,17 +1,4 @@
 
-#wrapper_1:after {
-    content: "";
-    background-color: rgb(109, 105, 105);
-    position: absolute;
-    width: 3px;
-    height: 980px;
-    top: 10px;
-    left: 24px;
-    right: 24px;
-    left: 46%;
-    display: block;
-}
-
 
 h2 {
     margin: 10px 0;
@@ -21,9 +8,9 @@ h2 {
     position: relative;
     display: flex;
     align-items: center;
-    width: auto ;
+    width: 450px;
+    max-width: 100%;
     padding: 25px;
-    margin: 5px;
     border: 1px solid rgba(9, 90, 178);
     border-radius: 3px;
     transition: 0.2s;

@@ -9,7 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientService } from 'src/app/services/client.service';
 import { StemmingBasedTranslationParams } from 'src/app/models/StemmingBasedTranslationParams';
 import { Status } from '../../models/status';
-import { handleVars } from 'src/app/models/VarsHandler';
+import { setVars } from 'src/app/models/VarsHandler';
 
 @Component({
   selector: 'app-linguistic-card',
@@ -17,6 +17,34 @@ import { handleVars } from 'src/app/models/VarsHandler';
   styleUrls: ['./linguistic-card.component.css']
 })
 export class LinguisticCardComponent implements OnInit,OnChanges {
+  
+  fileName: any;
+  fileUrl: any;
+  stagedAvatar = "a289ee5f-9a73-44db-b802-44e1ae596cd1";
+  prodAvatar = "5f123ef5-2852-4d48-b355-a6f14485c750";
+
+  createFormData(arg0: File): FormData {
+    const formData = new FormData();
+    formData.append('file', arg0);
+    return formData;
+  }
+
+  uploadFile($event: Event) {
+    const element = $event.currentTarget as HTMLInputElement;
+    let file: FileList | null = element.files;
+    console.log(file);
+    if (file) {
+      this.client.uploadFileToProd(this.createFormData(file[0])).subscribe((res : any) => {
+        console.log(res);
+        this.fileName = res.fileName;
+        this.fileUrl = res.url;
+        this.form.patchValue({
+          fileName: this.fileName,
+          fileUrl: this.fileUrl,
+      });
+    });
+  }
+  }
 
     checkForSave() {
     if(this.form.touched && this.form.valid) {
@@ -84,20 +112,32 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
     if(this.form.valid) {
       this.word.title = this.form.get('title')?.value;
       this.word.definition = this.form.get('definition')?.value;
-      (this.word.translationParams as StemmingBasedTranslationParams).variations = handleVars(this.form.get('variations')?.value);
+      (this.word.translationParams as StemmingBasedTranslationParams).variations = setVars(this.form.get('variations')?.value );
       this.word.validation = {"BATCH_ID":{
         ...this.getStatusFromValidationState()
-      }}
-      // this.word.validation = this.form.get('validatetion')?.value; //
+      }};
+
+        if (this.word.sign) {
+          ((this.word.sign.animation as FileBasedAnimationConfig).avatars["5f123ef5-2852-4d48-b355-a6f14485c750"] as FileBasedAvatarFiles)= {'webp' : {
+            "_720x720": {
+              name : this.form.get('fileName')?.value,
+              url : this.form.get('fileUrl')?.value,
+              createdAt : Date.now(),
+            } as FileMetadata
+          }}
+        }
+
       this.client.updateWord(this.word).subscribe(
         (data) => {
-          this.updateForm(this.form);
-          // this.saveEvent.emit();
+          this.resetForm(this.form);
           this.form.setValidators(null);
         }
       )
     }
   }
+
+
+
   getStatusFromValidationState(): { notes?: string | undefined; status: import("../../models/status").Status; } {
     switch(this.form.get('validate')?.value) {
       case true:
@@ -108,7 +148,7 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
         return {status : Status.pending, notes : this.form.get('notes')?.value}
     }
   }
-  updateForm(form: FormGroup<any>) {
+  resetForm(form: FormGroup<any>) {
     form.markAsPristine();
     form.markAsUntouched();
   }
@@ -121,7 +161,9 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
         definition : ['', Validators.required],
         variations : [[], Validators.required],
         notes : [''],
-        validate: [false]
+        validate: [false],
+        fileName:   [{value: 'please add an interpolated file', disabled: true}],
+        fileUrl : [{value: 'please add an interpolated file', disabled: true}],
       });
 
 
@@ -134,6 +176,11 @@ export class LinguisticCardComponent implements OnInit,OnChanges {
       this.form.get('variations')?.setValue((changes["word"].currentValue.translationParams).variations);
       this.form.get('notes')?.setValue(changes["word"].currentValue.notes);
       this.form.get('validate')?.setValue(this.getValidationState(changes["word"].currentValue.validation));
+      
+      if (((changes["word"].currentValue.sign.animation as FileBasedAnimationConfig).avatars["5f123ef5-2852-4d48-b355-a6f14485c750"] as FileBasedAvatarFiles)) {
+        this.form.get('fileName')?.setValue((((changes["word"].currentValue.sign.animation as FileBasedAnimationConfig).avatars["5f123ef5-2852-4d48-b355-a6f14485c750"] as FileBasedAvatarFiles).webp?.['_720x720'] as FileMetadata).name);
+        this.form.get('fileUrl')?.setValue((((changes["word"].currentValue.sign.animation as FileBasedAnimationConfig).avatars["5f123ef5-2852-4d48-b355-a6f14485c750"] as FileBasedAvatarFiles).webp?.['_720x720'] as FileMetadata).url);
+      }
     }
   }
 

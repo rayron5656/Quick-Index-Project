@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileBasedAnimationConfig } from 'src/app/models/FileBasedAnimationConfig';
+import { FileMetadata } from 'src/app/models/FileMetadata';
 import { StemmingBasedTranslationParams } from 'src/app/models/StemmingBasedTranslationParams';
 import { Word } from 'src/app/models/word';
 import { ClientService } from 'src/app/services/client.service';
@@ -12,6 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrls: ['./add-word-form.component.css']
 })
 export class AddWordFormComponent implements OnInit {
+
 
   fileName: string = "please select a file";
   
@@ -64,7 +66,6 @@ export class AddWordFormComponent implements OnInit {
 }
 
 
-  
   uploadFile($event: Event) {
   const element = $event.currentTarget as HTMLInputElement;
   let file: FileList | null = element.files;
@@ -107,7 +108,7 @@ createFormData(arg0: File): FormData {
       fileUrl : [{value: 'please select a file', disabled: true},Validators.required],
       definition : ["",Validators.required],
       status : ["awaiting",Validators.required],
-      categories : ["",Validators.required],
+      categories : ["letters",Validators.required],
       title : ["",Validators.required],
       updatedBy : [""],
       variations : [],
@@ -141,7 +142,8 @@ createFormData(arg0: File): FormData {
     });
   }
   setVars(value: any): string[] {
-    let vars = value.split(',');
+    if (value) {
+      let vars = value.split(',');
     for (let i = 0; i < vars.length; i++) {
       if (vars[i].length > 0) {
         vars[i] = vars[i].trim();
@@ -150,6 +152,8 @@ createFormData(arg0: File): FormData {
       }
     }
     return vars;
+    }
+    return [];
   }
 
   ngOnInit(): void {
@@ -159,9 +163,10 @@ createFormData(arg0: File): FormData {
   submitForm() {
     console.log(this.word);
     this.clientService.addWord(this.word).subscribe((res : any) => {
-      console.log(res);
-      location.reload();
-    });
+          console.log(res);
+          location.reload();
+        });
+  
   }
 
 }

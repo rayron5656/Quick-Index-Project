@@ -7,6 +7,9 @@ import { Word } from '../models/word';
   providedIn: 'root'
 })
 export class ClientService {
+
+  
+
   
   serverUrl = 'http://localhost:5050';
   filesUrl = "http://localhost:5050/api/v1/files";
@@ -16,9 +19,29 @@ export class ClientService {
     private http: HttpClient
   ) { }
 
+
+
   addWord(newWord: Word) {
     return this.http.post(this.wordsUrl, newWord);
   }
+
+  uploadFileToTesting(formData: FormData) {
+    return this.http.post(this.filesUrl + '/testing', formData);
+  }
+
+  downloadFileUS(url: any) {
+    return this.http.get(this.filesUrl + '/downloadUS/', {
+      responseType: 'blob',
+      params: {
+        url: url
+      }
+    });
+  }
+
+  getWordByTitle(title: string) {
+    return this.http.get(this.wordsUrl + '/title/' + title);
+  }
+
 
   uploadFile(formData: any | null) {
     return this.http.post(this.filesUrl, formData);
@@ -37,9 +60,7 @@ export class ClientService {
       }});
   }
 
-  deleteAllStagedWords() {
-    return this.http.delete(this.wordsUrl+"/staged");
-  }
+
 
   getWordByTerm(term : string){
     return this.http.get('http://localhost:5050/api/v1/word/search/' + term)
@@ -47,6 +68,9 @@ export class ClientService {
   
   updateWord(word: Partial<Word>) {
     return this.http.put(this.wordsUrl+ "/update", word);
+  }
+  getAllWords() {
+    return this.http.get(this.wordsUrl);
   }
 
   search(search: any,index : number) {
